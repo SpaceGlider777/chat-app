@@ -1,0 +1,10 @@
+services:
+  client:
+    build: client
+    ports:
+      - "4200:80"
+
+  server:
+    build: server
+    ports:
+      - "3000:3000"
