@@ -1,0 +1,13 @@
+<div class="login-container">
+    <form class="login-card" [formGroup]="loginForm" (ngSubmit)="login()">
+        <h1>Login</h1>
+        <label>Username</label>
+        <input type="text" formControlName="username">
+        <label>Password</label>
+        <input type="password" formControlName="password">
+        <button type="submit" class="login-btn">Login</button>
+        <div id="register-link">Don't have an account? Register <a href="#">here</a>!</div>
+    </form>
+</div>
+
+<app-snackbar [message]="'Invalid username or password'" #snackbar></app-snackbar>

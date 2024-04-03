@@ -1,0 +1,33 @@
+.container {
+    box-sizing: border-box;
+    height: 100%;
+    display: flex;
+    gap: 1rem;
+}
+
+.chat-container {
+    box-sizing: border-box;
+    height: 100%;
+    width: 100%;
+    padding: 1rem 0;
+}
+
+.message-container {
+    position: relative;
+    height: 94%;
+    margin-bottom: 1rem;
+    color: white;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column-reverse;
+}
+
+input {
+    box-sizing: border-box;
+    background-color: var(--primary-color-dark);
+    width: 100%;
+    padding: 5px;
+    color: white;
+    font-size: medium;
+    border-radius: 3px;
+}

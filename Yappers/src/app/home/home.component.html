@@ -1,0 +1,13 @@
+<div class="container">
+  <app-groups></app-groups>
+
+  <div class="chat-container">
+    <div class="message-container">
+      <ng-container *ngFor="let message of messages">
+        <app-chat-bubble [user]="message.user" [content]="message.content"></app-chat-bubble>
+      </ng-container>
+    </div>
+
+    <input [(ngModel)]="input" (keyup.enter)="sendMessage()" placeholder="Type here to send a message..." />
+  </div>
+</div>

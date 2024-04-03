@@ -1,0 +1,38 @@
+.container {
+    box-sizing: border-box;
+    width: 15rem;
+    height: 100%;
+    background-color: var(--primary-color-dark);
+    padding: 1rem 0;
+}
+
+h2 {
+    margin: 0 0 1rem 0;
+    justify-content: center;
+}
+
+.groups {
+    font-size: 2em;
+}
+
+.add {
+    background-color: var(--accent-color);
+    padding: 5px;
+    cursor: pointer;
+}
+
+.add:hover {
+    background-color: var(--accent-color-dark);
+}
+
+.add-group-btn {
+    padding: 1rem 0 0 1rem;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+
+.icon-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}

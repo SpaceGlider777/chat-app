@@ -1,0 +1,28 @@
+.navbar-container {
+    position: fixed;
+    box-sizing: border-box;
+    width: 100%;
+    height: 3.5rem;
+    padding: 0 1.5rem;
+    background-color: var(--primary-color-darker);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#title {
+    font-family: 'Brush Script MT', cursive;
+    font-size: x-large;
+}
+
+#navbar-right {
+    display: flex;
+}
+
+#sign-in-btn {
+    cursor: pointer;
+}
+
+#sign-in-btn:hover {
+    text-shadow: white 0 0 10px;
+}
