@@ -2,7 +2,7 @@
 
 :root {
     --primary-color: #424242;
-    --primary-color-dark: #242424;
+    --primary-color-dark: #303030;
     --primary-color-darker: #212121;
     --primary-color-light: #636363;
     --accent-color: #1EB980;
@@ -18,6 +18,7 @@ html, body {
     color: white;
 }
 
+// Scroll bar design
 ::-webkit-scrollbar {
     width: 10px;
 }

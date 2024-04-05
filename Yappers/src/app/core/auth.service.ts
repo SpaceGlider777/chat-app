@@ -1,24 +1,37 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, map } from 'rxjs';
+import { Observable, map } from 'rxjs';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private user: BehaviorSubject<string | null> = new BehaviorSubject<string | null>(null);
-  userObservable: Observable<string | null> = this.user.asObservable();
+  private username: string | null = null;
 
   constructor(private http: HttpClient) { }
+
+  getUsername(): string | null {
+    return this.username;
+  }
+
+  setUsername(username: string): void {
+    this.username = username;
+  }
 
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(environment.apiEndpoint + '/authenticate/login', { username, password }).pipe(
       map(response => {
+        this.username = username;
         localStorage.setItem('access_token', response.token);
         return response;
       })
     );
+  }
+
+  logout(): void {
+    localStorage.removeItem('access_token');
+    this.username = null;
   }
 }
 

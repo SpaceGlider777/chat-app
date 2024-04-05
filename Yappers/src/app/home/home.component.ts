@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Message } from '../core/models/message';
+import { AuthService } from '../core/auth.service';
 
 @Component({
   selector: 'app-home',
@@ -11,6 +12,8 @@ export class HomeComponent implements OnInit {
   private hubConnectionBuilder!: HubConnection;
   messages: Message[] = [];
   input = '';
+
+  constructor(private authService: AuthService) { }
 
   ngOnInit(): void {
     this.hubConnectionBuilder = new HubConnectionBuilder().withUrl('http://localhost:5000/chat').build();
@@ -26,7 +29,7 @@ export class HomeComponent implements OnInit {
 
   sendMessage(): void {
     if (this.input.trim().length > 0) {
-      this.hubConnectionBuilder.invoke('SendMessage', 'Bob', this.input);
+      this.hubConnectionBuilder.invoke('SendMessage', this.authService.getUsername(), this.input);
       this.input = '';
     }
   }
