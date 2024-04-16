@@ -32,9 +32,7 @@ export class SnackbarComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void { }
 
   show(): void {
     if (this.isOpen) {
