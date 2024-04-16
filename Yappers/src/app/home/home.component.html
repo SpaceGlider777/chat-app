@@ -8,6 +8,8 @@
       </ng-container>
     </div>
 
-    <input [(ngModel)]="input" (keyup.enter)="sendMessage()" placeholder="Type here to send a message..." />
+    <form [formGroup]="inputForm" (submit)="sendMessage()">
+      <input formControlName="input" placeholder="Type here to send a message..." />
+    </form>
   </div>
 </div>

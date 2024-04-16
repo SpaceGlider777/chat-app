@@ -1,6 +1,8 @@
 <div class="navbar-container">
     <span id="title">Yappers</span>
     <span id="navbar-right">
-        <span *ngIf="authService.getUsername()" id="sign-in-btn">{{ authService.getUsername() }}</span>
+        <div *ngIf="router.url != '/login'" class="logout-btn" (click)="logout()">
+            <span class="material-icons">logout</span> 
+        </div>
     </span>
 </div>

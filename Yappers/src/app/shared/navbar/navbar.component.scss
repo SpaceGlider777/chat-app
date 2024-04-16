@@ -10,6 +10,11 @@
     justify-content: space-between;
 }
 
+.logout-btn:hover {
+    cursor: pointer;
+    text-shadow: white 0 0 10px;
+}
+
 #title {
     font-family: 'Brush Script MT', cursive;
     font-size: x-large;
@@ -17,12 +22,4 @@
 
 #navbar-right {
     display: flex;
-}
-
-#sign-in-btn {
-    cursor: pointer;
-}
-
-#sign-in-btn:hover {
-    text-shadow: white 0 0 10px;
 }

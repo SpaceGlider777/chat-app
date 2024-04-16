@@ -24,6 +24,7 @@ export class AuthService {
       map(response => {
         this.username = username;
         localStorage.setItem('access_token', response.token);
+        localStorage.setItem('expiration', response.expiration.toString());
         return response;
       })
     );
@@ -31,6 +32,7 @@ export class AuthService {
 
   logout(): void {
     localStorage.removeItem('access_token');
+    localStorage.removeItem('expiration');
     this.username = null;
   }
 }

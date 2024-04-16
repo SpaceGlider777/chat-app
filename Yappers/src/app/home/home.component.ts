@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Message } from '../core/models/message';
 import { AuthService } from '../core/auth.service';
+import { FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -11,7 +12,9 @@ import { AuthService } from '../core/auth.service';
 export class HomeComponent implements OnInit {
   private hubConnectionBuilder!: HubConnection;
   messages: Message[] = [];
-  input = '';
+  inputForm: FormGroup = new FormGroup({
+    input: new FormControl('')
+  });
 
   constructor(private authService: AuthService) { }
 
@@ -28,9 +31,10 @@ export class HomeComponent implements OnInit {
   }
 
   sendMessage(): void {
-    if (this.input.trim().length > 0) {
-      this.hubConnectionBuilder.invoke('SendMessage', this.authService.getUsername(), this.input);
-      this.input = '';
+    const message = this.inputForm.controls['input'].value.trim();
+    if (message.length > 0) {
+      this.hubConnectionBuilder.invoke('SendMessage', this.authService.getUsername(), message);
+      this.inputForm.controls['input'].setValue('');
     }
   }
 

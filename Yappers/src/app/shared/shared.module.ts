@@ -4,13 +4,15 @@ import { ChatBubbleComponent } from './chat-bubble/chat-bubble.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { SnackbarComponent } from './snackbar/snackbar.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ModalComponent } from './modal/modal.component';
 
 
 @NgModule({
   declarations: [
     ChatBubbleComponent,
     NavbarComponent,
-    SnackbarComponent
+    SnackbarComponent,
+    ModalComponent
   ],
   imports: [
     CommonModule,
