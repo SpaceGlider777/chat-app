@@ -1,6 +1,6 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 
@@ -11,9 +11,9 @@ import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
 })
 export class LoginComponent implements OnInit {
   @ViewChild('snackbar') snackbar!: SnackbarComponent;
-  loginForm = new FormGroup({
-    username: new FormControl(''),
-    password: new FormControl('')
+  loginForm = new UntypedFormGroup({
+    username: new UntypedFormControl(''),
+    password: new UntypedFormControl('')
   });
 
   constructor(private authService: AuthService, private router: Router) { }

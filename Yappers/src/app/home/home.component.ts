@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Message } from '../core/models/message';
 import { AuthService } from '../core/auth.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-home',
@@ -12,8 +12,8 @@ import { FormControl, FormGroup } from '@angular/forms';
 export class HomeComponent implements OnInit {
   private hubConnectionBuilder!: HubConnection;
   messages: Message[] = [];
-  inputForm: FormGroup = new FormGroup({
-    input: new FormControl('')
+  inputForm: UntypedFormGroup = new UntypedFormGroup({
+    input: new UntypedFormControl('')
   });
 
   constructor(private authService: AuthService) { }
