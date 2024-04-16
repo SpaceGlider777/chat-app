@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SignalR;
 using YappersApi.Hubs;
-using YappersApi.Models;
 
 namespace YappersApi.Controllers
 {
@@ -14,12 +13,6 @@ namespace YappersApi.Controllers
         public ChatController(IHubContext<ChatHub> _chatHub)
         {
             chatHub = _chatHub;
-        }
-
-        [HttpPost]
-        public async Task SendMessage([FromBody] Message message)
-        {
-            await chatHub.Clients.All.SendAsync("ReceiveMessage", message.User, message.Content);
         }
     }
 }

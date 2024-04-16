@@ -3,6 +3,7 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using YappersApi.Auth;
 
@@ -11,9 +12,11 @@ using YappersApi.Auth;
 namespace YappersApi.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240411050816_AddConversationRoomTable")]
+    partial class AddConversationRoomTable
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,21 +24,6 @@ namespace YappersApi.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder);
-
-            modelBuilder.Entity("ConversationRoomUser", b =>
-                {
-                    b.Property<string>("ConversationRoomsRoomName")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("UsersId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.HasKey("ConversationRoomsRoomName", "UsersId");
-
-                    b.HasIndex("UsersId");
-
-                    b.ToTable("ConversationRoomUser");
-                });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
                 {
@@ -101,6 +89,9 @@ namespace YappersApi.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ConversationRoomRoomName")
+                        .HasColumnType("nvarchar(450)");
+
                     b.Property<string>("Discriminator")
                         .IsRequired()
                         .HasMaxLength(13)
@@ -147,6 +138,8 @@ namespace YappersApi.Migrations
                         .HasColumnType("nvarchar(256)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ConversationRoomRoomName");
 
                     b.HasIndex("NormalizedEmail")
                         .HasDatabaseName("EmailIndex");
@@ -249,7 +242,12 @@ namespace YappersApi.Migrations
                     b.Property<string>("RoomName")
                         .HasColumnType("nvarchar(450)");
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("RoomName");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("ConversationRooms");
                 });
@@ -261,21 +259,6 @@ namespace YappersApi.Migrations
                     b.HasDiscriminator().HasValue("User");
                 });
 
-            modelBuilder.Entity("ConversationRoomUser", b =>
-                {
-                    b.HasOne("YappersApi.Models.ConversationRoom", null)
-                        .WithMany()
-                        .HasForeignKey("ConversationRoomsRoomName")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("YappersApi.Models.User", null)
-                        .WithMany()
-                        .HasForeignKey("UsersId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-                });
-
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityRole", null)
@@ -283,6 +266,13 @@ namespace YappersApi.Migrations
                         .HasForeignKey("RoleId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUser", b =>
+                {
+                    b.HasOne("YappersApi.Models.ConversationRoom", null)
+                        .WithMany("Users")
+                        .HasForeignKey("ConversationRoomRoomName");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -325,6 +315,23 @@ namespace YappersApi.Migrations
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("YappersApi.Models.ConversationRoom", b =>
+                {
+                    b.HasOne("YappersApi.Models.User", null)
+                        .WithMany("Rooms")
+                        .HasForeignKey("UserId");
+                });
+
+            modelBuilder.Entity("YappersApi.Models.ConversationRoom", b =>
+                {
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("YappersApi.Models.User", b =>
+                {
+                    b.Navigation("Rooms");
                 });
 #pragma warning restore 612, 618
         }
