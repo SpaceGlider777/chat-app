@@ -2,17 +2,13 @@
     <h2 class="icon-label">
         <span class="material-icons groups">groups</span>
     </h2>
-    <div class="add-group-btn icon-label">
+    <div class="add-group-btn icon-label" (click)="openNewGroupDialog()">
         <span id="group-label">Groups</span>
         <span class="material-icons add">add</span>
     </div>
     <div id="group-list">
-        <div class="group-list-item">
-            <span>Pizza Party</span>
-            <span class="material-icons">chevron_right</span>
-        </div>
-        <div class="group-list-item">
-            <span>Freetalk</span>
+        <div *ngFor="let group of groups" class="group-list-item" (click)="onGroupSelect(group)">
+            <span>{{ group.roomName }}</span>
             <span class="material-icons">chevron_right</span>
         </div>
     </div>

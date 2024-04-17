@@ -6,6 +6,7 @@ namespace YappersApi.Models
     {
         [Key]
         public string RoomName { get; set; }
-        public virtual ICollection<User> Users { get; set; }
+        
+        public virtual ICollection<User>? Users { get; set; }
     }
 }

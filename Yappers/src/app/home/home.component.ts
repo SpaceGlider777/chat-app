@@ -3,6 +3,7 @@ import { HubConnection, HubConnectionBuilder } from '@microsoft/signalr';
 import { Message } from '../core/models/message';
 import { AuthService } from '../core/auth.service';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { Group } from '../core/models/group';
 
 @Component({
   selector: 'app-home',
@@ -11,12 +12,15 @@ import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 })
 export class HomeComponent implements OnInit {
   private hubConnectionBuilder!: HubConnection;
+  selectedGroup?: Group;
   messages: Message[] = [];
   inputForm: UntypedFormGroup = new UntypedFormGroup({
     input: new UntypedFormControl('')
   });
 
-  constructor(private authService: AuthService) { }
+  constructor(
+    private authService: AuthService,
+  ) { }
 
   ngOnInit(): void {
     this.hubConnectionBuilder = new HubConnectionBuilder().withUrl('http://localhost:5000/chat').build();
@@ -36,6 +40,10 @@ export class HomeComponent implements OnInit {
       this.hubConnectionBuilder.invoke('SendMessage', this.authService.getUsername(), message);
       this.inputForm.controls['input'].setValue('');
     }
+  }
+
+  onGroupSelect(group: Group): void {
+    this.selectedGroup = group;
   }
 
 }

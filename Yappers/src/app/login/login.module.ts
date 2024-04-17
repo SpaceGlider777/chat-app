@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { SharedModule } from '../shared/shared.module';
-
+import { MatButtonModule } from '@angular/material/button';
 
 
 @NgModule({
@@ -13,7 +13,8 @@ import { SharedModule } from '../shared/shared.module';
   imports: [
     CommonModule,
     ReactiveFormsModule,
-    SharedModule
+    SharedModule,
+    MatButtonModule
   ]
 })
 export class LoginModule { }

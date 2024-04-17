@@ -12,6 +12,13 @@
     padding: 1rem 0;
 }
 
+.chat-header {
+    background-color: var(--primary-color-darker);
+    height: 5%;
+    width: 100%;
+    z-index: 1;
+}
+
 .message-container {
     position: relative;
     height: 94%;
@@ -30,4 +37,5 @@ input {
     color: white;
     font-size: medium;
     border-radius: 3px;
+    margin: 0;
 }

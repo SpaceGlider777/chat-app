@@ -1,26 +1,25 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from '../core/auth.service';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
-import { SnackbarComponent } from '../shared/snackbar/snackbar.component';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.scss']
 })
-export class LoginComponent implements OnInit {
-  @ViewChild('snackbar') snackbar!: SnackbarComponent;
+export class LoginComponent {
   loginForm = new UntypedFormGroup({
     username: new UntypedFormControl(''),
     password: new UntypedFormControl('')
   });
 
-  constructor(private authService: AuthService, private router: Router) { }
-
-  ngOnInit(): void { 
-
-  }
+  constructor(
+    private authService: AuthService, 
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   login(): void {
     const self = this;
@@ -29,7 +28,10 @@ export class LoginComponent implements OnInit {
         self.router.navigate(['/home']);
       },
       error() {
-        self.snackbar.show();
+        self.snackBar.open('Incorrect username or password', 'CLOSE', {
+          verticalPosition: 'top',
+          duration: 3000
+        });
       },
     });
   }

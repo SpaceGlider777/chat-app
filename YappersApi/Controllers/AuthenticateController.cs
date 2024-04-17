@@ -32,6 +32,7 @@ namespace YappersApi.Controllers
         public async Task<IActionResult> Login([FromBody] LoginModel model)
         {
             var user = await _userManager.FindByNameAsync(model.UserName!);
+            
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password!))
             {
                 var userRoles = await _userManager.GetRolesAsync(user);
@@ -64,6 +65,7 @@ namespace YappersApi.Controllers
         public async Task<IActionResult> Register([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.UserName!);
+
             if (userExists != null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
@@ -75,7 +77,9 @@ namespace YappersApi.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName
             };
+
             var result = await _userManager.CreateAsync(user, model.Password!);
+
             if (!result.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });
@@ -89,6 +93,7 @@ namespace YappersApi.Controllers
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterModel model)
         {
             var userExists = await _userManager.FindByNameAsync(model.UserName!);
+
             if (userExists != null)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User already exists!" });
@@ -100,7 +105,9 @@ namespace YappersApi.Controllers
                 SecurityStamp = Guid.NewGuid().ToString(),
                 UserName = model.UserName
             };
+
             var result = await _userManager.CreateAsync(user, model.Password!);
+
             if (!result.Succeeded)
             {
                 return StatusCode(StatusCodes.Status500InternalServerError, new Response { Status = "Error", Message = "User creation failed! Please check user details and try again." });

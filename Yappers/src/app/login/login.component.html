@@ -5,9 +5,7 @@
         <input type="text" formControlName="username">
         <label>Password</label>
         <input type="password" formControlName="password">
-        <button type="submit" class="login-btn">Login</button>
+        <button mat-flat-button color="accent" type="submit">Login</button>
         <div id="register-link">Don't have an account? Register <a href="#">here</a>!</div>
     </form>
 </div>
-
-<app-snackbar [message]="'Invalid username or password'" #snackbar></app-snackbar>
