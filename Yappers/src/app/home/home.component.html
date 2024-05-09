@@ -1,15 +1,33 @@
 <div class="container">
-  <app-groups (groupSelect)="onGroupSelect($event)"></app-groups>
+  <app-groups (groupSelect)="onGroupSelect($event)" [groupUpdateEvent]="groupUpdateSubject"></app-groups>
 
-  <div class="chat-container">
-    <div class="message-container">
-      <ng-container *ngFor="let message of messages">
-        <app-chat-bubble [user]="message.user" [content]="message.content"></app-chat-bubble>
-      </ng-container>
+  <div *ngIf="selectedGroup; else selectAGroup" class="chat-container">
+    <div class="chat-header">
+      <h2 class="room-name">{{ selectedGroup.roomName }}</h2>
+      <button mat-icon-button [matMenuTriggerFor]="menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item (click)="deleteGroup()">Delete Group</button>
+      </mat-menu>
     </div>
 
-    <form [formGroup]="inputForm" (submit)="sendMessage()">
-      <input formControlName="input" placeholder="Type here to send a message..." />
-    </form>
+    <div class="chat-inner-container">
+      <div class="message-container">
+        <ng-container *ngFor="let message of messages">
+          <app-chat-bubble [message]="message"></app-chat-bubble>
+        </ng-container>
+      </div>
+
+      <form *ngIf="selectedGroup; else selectAGroup" [formGroup]="inputForm" (submit)="sendMessage()">
+        <input formControlName="input" placeholder="Type here to send a message..." />
+      </form>
+    </div>
   </div>
+
+  <ng-template #selectAGroup>
+    <div class="select-a-group-container">
+      <h2>Select a group to start yapping...</h2>
+    </div>
+  </ng-template>
 </div>

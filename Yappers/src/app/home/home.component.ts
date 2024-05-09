@@ -4,6 +4,9 @@ import { Message } from '../core/models/message';
 import { AuthService } from '../core/auth.service';
 import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
 import { Group } from '../core/models/group';
+import { GroupService } from '../core/group.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-home',
@@ -17,9 +20,12 @@ export class HomeComponent implements OnInit {
   inputForm: UntypedFormGroup = new UntypedFormGroup({
     input: new UntypedFormControl('')
   });
+  groupUpdateSubject: Subject<void> = new Subject();
 
   constructor(
     private authService: AuthService,
+    private groupService: GroupService,
+    private snackBar: MatSnackBar
   ) { }
 
   ngOnInit(): void {
@@ -27,23 +33,43 @@ export class HomeComponent implements OnInit {
     this.hubConnectionBuilder.start().then(() => {
       console.log('Connection started...');
     }).catch(err => {
-      console.log("Couldn't connect to the server.");
+      this.snackBar.open("Couldn't connect to the server", 'CLOSE');
     });
     this.hubConnectionBuilder.on('ReceiveMessage', (user: string, content: string) => {
-      this.messages.unshift({ user, content });
+      this.messages.push({ user, content });
     });
   }
 
   sendMessage(): void {
     const message = this.inputForm.controls['input'].value.trim();
     if (message.length > 0) {
-      this.hubConnectionBuilder.invoke('SendMessage', this.authService.getUsername(), message);
+      this.hubConnectionBuilder.invoke('SendGroupMessage', this.authService.getUsername(), message);
       this.inputForm.controls['input'].setValue('');
     }
   }
 
   onGroupSelect(group: Group): void {
     this.selectedGroup = group;
+    this.groupService.getMessages(group.roomName).subscribe(messages => {
+      this.messages = messages;
+    });
+    this.hubConnectionBuilder.invoke('JoinGroup', group.roomName);
+  }
+
+  deleteGroup(): void {
+    if (this.selectedGroup) {
+      const self = this;
+      this.groupService.deleteGroup(this.selectedGroup.roomName).subscribe({
+        error(err) {
+          self.snackBar.open(`ERROR: ${err}`, 'CLOSE');
+        },
+        complete() {
+          self.snackBar.open('Group deleted', 'CLOSE');
+          self.groupUpdateSubject.next();
+          self.selectedGroup = undefined;
+        }
+      });
+    }
   }
 
 }

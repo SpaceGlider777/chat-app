@@ -1,9 +1,11 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
 import { NewGroupDialogComponent } from '../new-group-dialog/new-group-dialog.component';
 import { GroupService } from 'src/app/core/group.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Group } from 'src/app/core/models/group';
+import { MatMenuTrigger } from '@angular/material/menu';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-groups',
@@ -11,7 +13,9 @@ import { Group } from 'src/app/core/models/group';
   styleUrls: ['./groups.component.scss']
 })
 export class GroupsComponent implements OnInit {
+  @Input() groupUpdateEvent!: Observable<void>;
   @Output() groupSelect = new EventEmitter<Group>();
+  @ViewChild(MatMenuTrigger) trigger!: MatMenuTrigger;
   groups: Group[] = [];
   selectedGroup?: Group;
 
@@ -22,6 +26,13 @@ export class GroupsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.updateGroups();
+    this.groupUpdateEvent.subscribe(() => {
+      this.updateGroups();
+    });
+  }
+
+  updateGroups(): void {
     this.groupService.getGroups().subscribe(groups => {
       this.groups = groups;
     });
@@ -38,6 +49,7 @@ export class GroupsComponent implements OnInit {
               verticalPosition: 'top',
               duration: 3000
             });
+            self.updateGroups();
           },
           error(err) {
             self.snackBar.open(err.message, 'CLOSE', {
@@ -48,6 +60,10 @@ export class GroupsComponent implements OnInit {
         });
       }
     });
+  }
+
+  openGroupOptions(): void {
+    this.trigger.openMenu();
   }
 
   onGroupSelect(group: Group): void {

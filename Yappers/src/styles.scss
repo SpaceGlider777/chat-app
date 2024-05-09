@@ -20,7 +20,7 @@ $Yappers-warn: mat.define-palette(mat.$red-palette);
 
 // Create the theme object. A theme consists of configurations for individual
 // theming systems such as "color" or "typography".
-$Yappers-theme: mat.define-light-theme((
+$Yappers-theme: mat.define-dark-theme((
   color: (
     primary: $Yappers-primary,
     accent: $Yappers-accent,

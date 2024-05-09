@@ -13,10 +13,21 @@ namespace YappersApi.Auth
 
         public DbSet<ConversationRoom> ConversationRooms { get; set; }
         public DbSet<User> Users { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
             base.OnModelCreating(builder);
+
+            builder.Entity<ConversationRoom>()
+                .HasMany(e => e.Messages)
+                .WithOne(e => e.ConversationRoom)
+                .HasForeignKey(e => e.RoomName)
+                .HasPrincipalKey(e => e.RoomName);
+
+            builder.Entity<Message>()
+                .Property(e => e.CreatedDate)
+                .HasDefaultValueSql("getdate()");
         }
     }
 }

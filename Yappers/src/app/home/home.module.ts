@@ -7,6 +7,8 @@ import { SharedModule } from '../shared/shared.module';
 import { MatDialogModule } from '@angular/material/dialog';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatMenuModule } from '@angular/material/menu';
 import { NewGroupDialogComponent } from './components/new-group-dialog/new-group-dialog.component';
 
 
@@ -23,7 +25,9 @@ import { NewGroupDialogComponent } from './components/new-group-dialog/new-group
     ReactiveFormsModule,
     MatDialogModule,
     MatSnackBarModule,
-    MatButtonModule
+    MatButtonModule,
+    MatIconModule,
+    MatMenuModule
   ],
   exports: [
 

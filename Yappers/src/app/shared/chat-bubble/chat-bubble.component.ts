@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
+import { Message } from 'src/app/core/models/message';
 
 @Component({
   selector: 'app-chat-bubble',
@@ -6,8 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
   styleUrls: ['./chat-bubble.component.scss']
 })
 export class ChatBubbleComponent implements OnInit {
-  @Input() user?: string;
-  @Input() content?: string;
+  @Input() message?: Message;
 
   constructor() { }
 

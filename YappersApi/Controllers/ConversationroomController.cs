@@ -24,6 +24,33 @@ namespace YappersApi.Controllers
             return await _context.ConversationRooms.ToListAsync();
         }
 
+        [HttpGet("{roomName}")]
+        public async Task<ActionResult<ConversationRoom>> GetRoom(string roomName)
+        {
+            var room = await _context.ConversationRooms.FindAsync(roomName);
+
+            if (room == null) {
+                return BadRequest();
+            }
+
+            return Ok(room);
+        }
+
+        [HttpGet("{roomName}/messages")]
+        public async Task<ActionResult<IEnumerable<Message>>> GetMessages(string roomName)
+        {
+            var room = await _context.ConversationRooms
+                .Include(e => e.Messages)
+                .FirstOrDefaultAsync(e => e.RoomName == roomName);
+
+            if (room == null)
+            {
+                return BadRequest();
+            }
+
+            return room.Messages.ToList();
+        }
+
         [HttpPost]
         public async Task<ActionResult<ConversationRoom>> AddRoom([FromBody] ConversationRoom room)
         {

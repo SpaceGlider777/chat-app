@@ -1,6 +1,7 @@
 <div class="container">
-    <span class="username">Bob</span>
+    <span class="username">{{ message?.user }}</span>
+    <span></span>
     <div class="chat-bubble-container">
-        <div class="chat-bubble">{{ content }}</div>
+        <div class="chat-bubble">{{ message?.content }}</div>
     </div>
 </div>

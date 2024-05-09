@@ -1,10 +1,18 @@
 using Microsoft.AspNetCore.SignalR;
+using YappersApi.Auth;
+using YappersApi.Models;
 
 namespace YappersApi.Hubs
 {
     public class ChatHub : Hub
     {
         public static Dictionary<string, string> groupConnections = new Dictionary<string, string>();
+        private ApplicationDbContext _context;
+
+        public ChatHub(ApplicationDbContext context)
+        {
+            _context = context;
+        }
 
         public async Task SendMessage(string user, string message)
         {
@@ -28,6 +36,8 @@ namespace YappersApi.Hubs
             {
                 string groupName = groupConnections[Context.ConnectionId];
                 await Clients.Group(groupName).SendAsync("ReceiveMessage", user, message);
+                _context.Messages.Add(new Message{ User = user, RoomName = groupName, Content = message });
+                await _context.SaveChangesAsync();
             }
         }
 
