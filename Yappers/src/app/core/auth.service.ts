@@ -19,6 +19,10 @@ export class AuthService {
     this.username = username;
   }
 
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post<any>(environment.apiEndpoint + '/authenticate/register', { username, email, password });
+  }
+
   login(username: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(environment.apiEndpoint + '/authenticate/login', { username, password }).pipe(
       map(response => {

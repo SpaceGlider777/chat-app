@@ -10,6 +10,7 @@ import { AuthInterceptor } from './core/auth.interceptor';
 import { LoginModule } from './login/login.module';
 import { HomeModule } from './home/home.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { RegisterModule } from './register/register.module';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     FormsModule,
     SharedModule,
     HttpClientModule,
+    RegisterModule,
     LoginModule,
     HomeModule
   ],

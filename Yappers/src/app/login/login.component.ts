@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../core/auth.service';
-import { UntypedFormControl, UntypedFormGroup } from '@angular/forms';
+import { FormControl, FormGroup } from '@angular/forms';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -10,9 +10,9 @@ import { MatSnackBar } from '@angular/material/snack-bar';
   styleUrls: ['./login.component.scss']
 })
 export class LoginComponent {
-  loginForm = new UntypedFormGroup({
-    username: new UntypedFormControl(''),
-    password: new UntypedFormControl('')
+  loginForm = new FormGroup({
+    username: new FormControl(''),
+    password: new FormControl('')
   });
 
   constructor(
@@ -23,7 +23,7 @@ export class LoginComponent {
 
   login(): void {
     const self = this;
-    this.authService.login(this.loginForm.controls['username'].value, this.loginForm.controls['password'].value).subscribe({
+    this.authService.login(this.loginForm.controls['username'].value!, this.loginForm.controls['password'].value!).subscribe({
       complete() {
         self.router.navigate(['/home']);
       },

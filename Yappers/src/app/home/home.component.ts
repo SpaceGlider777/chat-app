@@ -33,7 +33,10 @@ export class HomeComponent implements OnInit {
     this.hubConnectionBuilder.start().then(() => {
       console.log('Connection started...');
     }).catch(err => {
-      this.snackBar.open("Couldn't connect to the server", 'CLOSE');
+      this.snackBar.open("Couldn't connect to the server", 'CLOSE', {
+        verticalPosition: 'top',
+        duration: 3000
+      });
     });
     this.hubConnectionBuilder.on('ReceiveMessage', (user: string, content: string) => {
       this.messages.push({ user, content });
@@ -61,10 +64,16 @@ export class HomeComponent implements OnInit {
       const self = this;
       this.groupService.deleteGroup(this.selectedGroup.roomName).subscribe({
         error(err) {
-          self.snackBar.open(`ERROR: ${err}`, 'CLOSE');
+          self.snackBar.open(`ERROR: ${err}`, 'CLOSE', {
+            verticalPosition: 'top',
+            duration: 3000
+          });
         },
         complete() {
-          self.snackBar.open('Group deleted', 'CLOSE');
+          self.snackBar.open('Group deleted', 'CLOSE', {
+            verticalPosition: 'top',
+            duration: 3000
+          });
           self.groupUpdateSubject.next();
           self.selectedGroup = undefined;
         }
